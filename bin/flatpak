@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+set -eu
+
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+APP_ID=io.github.gornostal.Omawrite
+MANIFEST="$ROOT/flatpak/$APP_ID.yml"
+BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
+
+if command -v flatpak-builder >/dev/null 2>&1; then
+  set -- flatpak-builder
+elif flatpak info org.flatpak.Builder >/dev/null 2>&1; then
+  set -- flatpak run --filesystem="$ROOT" org.flatpak.Builder
+else
+  echo "flatpak-builder is required: flatpak install flathub org.flatpak.Builder" >&2
+  exit 1
+fi
+
+cd "$ROOT"
+"$@" --user --install --install-deps-from=flathub --force-clean \
+  --state-dir="$ROOT/.flatpak-builder" "$ROOT/build-flatpak" "$MANIFEST"
+
+install -Dm755 "$ROOT/flatpak/omawrite-launcher" "$BIN_DIR/omawrite"
+echo "Installed $APP_ID and the omawrite command in $BIN_DIR"

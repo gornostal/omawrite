@@ -1,0 +1,40 @@
+app-id: io.github.gornostal.Omawrite
+runtime: org.kde.Platform
+runtime-version: '6.10'
+sdk: org.kde.Sdk
+command: omawrite
+rename-desktop-file: omawrite.desktop
+rename-icon: omawrite
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # Printing goes through CUPS rather than a portal.
+  - --socket=cups
+  # A text editor opens paths from the command line and watches them for
+  # external changes, which the document portal cannot do for unsaved paths.
+  # This also covers Omarchy's theme under ~/.local/state/omarchy.
+  - --filesystem=home
+modules:
+  - name: omawrite
+    buildsystem: simple
+    build-commands:
+      - qmake APP_ID=${FLATPAK_ID} omawrite.pro
+      - make -j${FLATPAK_BUILDER_N_JOBS}
+      - install -Dm755 omawrite ${FLATPAK_DEST}/bin/omawrite
+      - install -Dm644 pkgbuild/omawrite.desktop ${FLATPAK_DEST}/share/applications/omawrite.desktop
+      - install -Dm644 pkgbuild/omawrite.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/omawrite.svg
+      - install -Dm644 flatpak/${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      - install -Dm644 LICENSE ${FLATPAK_DEST}/share/licenses/${FLATPAK_ID}/LICENSE
+      - install -Dm644 fonts/OFL.txt ${FLATPAK_DEST}/share/licenses/${FLATPAK_ID}/OFL.txt
+    sources:
+      - type: dir
+        path: ..
+        skip:
+          - .git
+          - .flatpak-builder
+          - build
+          - build-tests
+          - build-flatpak
+          - repo-flatpak

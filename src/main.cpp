@@ -13,11 +13,17 @@
 #include "backend.h"
 #include "systemtheme.h"
 
+// Names both the .desktop file and the icon. Flatpak builds pass their app ID
+// so the compositor can match windows to the exported desktop entry.
+#ifndef OMAWRITE_APP_ID
+#define OMAWRITE_APP_ID "omawrite"
+#endif
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("omawrite"));
-    app.setDesktopFileName(QStringLiteral("omawrite"));
-    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("omawrite")));
+    app.setDesktopFileName(QStringLiteral(OMAWRITE_APP_ID));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral(OMAWRITE_APP_ID)));
 
     QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/iAWriterMonoS-Regular.ttf"));
     QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/iAWriterMonoS-Italic.ttf"));

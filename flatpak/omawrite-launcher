@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# Runs the Flatpak build of Omawrite from a terminal. The sandbox starts in a
+# different directory, so a file argument is made absolute first; existing
+# files are forwarded through the document portal so paths outside $HOME open.
+set -eu
+
+APP_ID=io.github.gornostal.Omawrite
+
+if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
+  exec flatpak run "$APP_ID" "$@"
+fi
+
+target="$(realpath -m -- "$1")"
+shift
+
+if [ -e "$target" ]; then
+  exec flatpak run --file-forwarding "$APP_ID" @@ "$target" @@ "$@"
+fi
+
+exec flatpak run "$APP_ID" "$target" "$@"

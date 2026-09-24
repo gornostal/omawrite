@@ -11,3 +11,6 @@ moc_*.cpp
 qrc_*.cpp
 .qmake.stash
 Makefile
+/.flatpak-builder/
+/build-flatpak/
+/repo-flatpak/

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.gornostal.Omawrite</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT AND OFL-1.1</project_license>
+  <name>Omawrite</name>
+  <summary>Dead-simple Markdown writing app</summary>
+  <developer id="io.omacom">
+    <name>David Heinemeier Hansson</name>
+  </developer>
+  <description>
+    <p>
+      A distraction-free Markdown editor built with Qt Quick that follows the
+      system dark and light mode and the desktop text size.
+    </p>
+    <p>
+      Unsaved drafts are recovered after an abnormal exit, and open files are
+      watched so an external change cannot silently replace local work.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.gornostal.Omawrite.desktop</launchable>
+  <url type="homepage">https://github.com/gornostal/omawrite</url>
+  <url type="vcs-browser">https://github.com/gornostal/omawrite</url>
+  <content_rating type="oars-1.1"/>
+  <provides>
+    <binary>omawrite</binary>
+  </provides>
+  <releases>
+    <release version="0.1.0" date="2026-06-21"/>
+  </releases>
+</component>

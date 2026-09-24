@@ -10,6 +10,20 @@ A dead-simple Markdown writing app built with Qt Quick and C++ that automaticall
 
 Install via the Omarchy Package Repository via the `omawrite` package. It's installed by default in new installations of Omarchy (from Quattro forward).
 
+### Flatpak
+
+On other distributions, build and install the Flatpak for the current user:
+
+```sh
+./bin/flatpak
+```
+
+This needs `flatpak` and `flatpak-builder` (or `org.flatpak.Builder` from
+Flathub) and pulls the KDE 6.10 runtime and SDK from Flathub on first run. It
+adds Omawrite to the application menu and installs an `omawrite` command in
+`~/.local/bin` (override with `BIN_DIR`), so `omawrite notes.md` works from any
+directory.
+
 ## Shortcuts
 
 - `Ctrl+S` saves. Unsaved documents use the XDG desktop portal file picker.
